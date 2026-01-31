@@ -90,11 +90,11 @@ public:
         if (this->cert_pem || this->client_cert_pem || this->client_key_pem) {
             if (this->cert_pem) {
                 if (!thisModem().downloadCertificateImpl("rootCA.pem", this->cert_pem)) {
-                    log_e("Download rootCA failed!");
+                    // log_e("Download rootCA failed!");
                     return false;
                 }
                 if (!thisModem().convertCertificateImpl(2, "rootCA.pem")) {
-                    log_e("Convert rootCa failed!");
+                    // log_e("Convert rootCa failed!");
                     return false;
                 }
             }
@@ -102,7 +102,7 @@ public:
             if (this->client_cert_pem) {
                 if (!thisModem().downloadCertificateImpl("deviceCert.crt",
                         this->client_cert_pem)) {
-                    log_e("Download deviceCert failed!");
+                    // log_e("Download deviceCert failed!");
                     return false;
                 }
             }
@@ -110,7 +110,7 @@ public:
             if (this->client_key_pem) {
                 if (!thisModem().downloadCertificateImpl("devicePrivateKey.crt",
                         this->client_key_pem)) {
-                    log_e("Download devicePSK failed!");
+                    // log_e("Download devicePSK failed!");
                     return false;
                 }
             }
@@ -118,26 +118,26 @@ public:
             if (this->client_key_pem && this->client_cert_pem) {
                 if (!thisModem().convertCertificateImpl(1, "deviceCert.crt",
                                                         "devicePrivateKey.crt")) {
-                    log_e("Convert deviceCert or client_key failed!");
+                    // log_e("Convert deviceCert or client_key failed!");
                     return false;
                 }
             }
 
             // Configure the SSL/TLS version for a secure socket connection
             if (!thisModem().sslConfigVersionImpl(0, 3)) {
-                log_e("Configure SSL Version failed!");
+                // log_e("Configure SSL Version failed!");
                 return false;
             }
 
             if (!thisModem().sslConfigSniImpl(0, server)) {
-                log_e("Configure SSL SNI failed!");
+                // log_e("Configure SSL SNI failed!");
                 return false;
             }
 
             if (this->cert_pem && !this->client_cert_pem) {
                 thisModem().sendAT("+SMSSL=1,", '"', "rootCA.pem", '"', ',', "\"\"");
                 if (thisModem().waitResponse() != 1) {
-                    log_e("Setting SMSSL failed!");
+                    // log_e("Setting SMSSL failed!");
                     return false;
                 }
             }
@@ -152,7 +152,7 @@ public:
                 thisModem().sendAT("+SMSSL=1,", '"', "rootCA.pem", '"', ',', '"',
                                    "deviceCert.crt", '"');
                 if (thisModem().waitResponse() != 1) {
-                    log_e("Setting SMSSL failed!");
+                    // log_e("Setting SMSSL failed!");
                     return false;
                 }
             }

@@ -942,7 +942,7 @@ class TinyGsmSim7600 : public TinyGsmModem<TinyGsmSim7600>,
     sendAT("+CGNSSMODE=", mode, ",1");
     bool rlst = waitResponse(1000UL) == 1;
     enableGPSImpl(-1, -1);
-    log_d("set gpio mode : %d\n", rlst);
+    // log_d("set gpio mode : %d\n", rlst);
     return rlst;
   }
 

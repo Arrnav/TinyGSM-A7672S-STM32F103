@@ -109,15 +109,15 @@ public:
 
         while (bytesWrite < size) {
             size_t currentChunkSize = min(chunkSize, size - bytesWrite);
-            log_d("Writing chunk: %u-%u bytes (total: %u%%)\n", bytesWrite, bytesWrite + currentChunkSize - 1, (bytesWrite * 100) / size);
+            // log_d("Writing chunk: %u-%u bytes (total: %u%%)\n", bytesWrite, bytesWrite + currentChunkSize - 1, (bytesWrite * 100) / size);
             thisModem().sendAT("+CFTRANRX=", "\"", PATH, ":", filename, "\",", currentChunkSize, ",", 100, ",", bytesWrite);
             if (thisModem().waitResponse(10000, ">") != 1) {
-                log_e("Timeout waiting for data");
+                // log_e("Timeout waiting for data");
                 goto cleanup;
             }
             thisModem().stream.write(&buffer[bytesWrite], currentChunkSize);
             if (thisModem().waitResponse(10000) != 1) {
-                log_e("Chunk upload failed");
+                // log_e("Chunk upload failed");
                 goto cleanup;
             }
             bytesWrite += currentChunkSize;
@@ -147,16 +147,16 @@ cleanup:
         }
         while (bytesRead < fileSize) {
             size_t currentChunkSize = min(chunkSize, fileSize - bytesRead);
-            log_d("Reading chunk: %u-%u bytes (total: %u%%)\n", bytesRead, bytesRead + currentChunkSize - 1, (bytesRead * 100) / fileSize);
+            // log_d("Reading chunk: %u-%u bytes (total: %u%%)\n", bytesRead, bytesRead + currentChunkSize - 1, (bytesRead * 100) / fileSize);
             thisModem().sendAT("+CFTRANTX=", "\"", PATH, ":", filename, "\",", bytesRead, ",", currentChunkSize, ",", 0);
             if (thisModem().waitResponse(10000, "+CFTRANTX: DATA,", "ERROR") != 1) {
-                log_e("Timeout waiting for data");
+                // log_e("Timeout waiting for data");
                 goto cleanup;
             }
             thisModem().streamSkipUntil('\n');
             thisModem().stream.readBytes(&buffer[bytesRead], currentChunkSize);
             if (thisModem().waitResponse(10000, "+CFTRANTX: 0", "ERROR") != 1) {
-                log_e("Reading data failed");
+                // log_e("Reading data failed");
                 goto cleanup;
             }
             bytesRead += currentChunkSize;

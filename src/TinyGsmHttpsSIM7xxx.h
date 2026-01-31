@@ -120,7 +120,7 @@ public:
                        ServerSSLVersion ssl_version = TINYGSM_SSL_TLS1_2, bool enableSNI = true)
     {
         if (url.length() > 64) {
-            log_e("URL too long ,max length is 64bytes");
+            // log_e("URL too long ,max length is 64bytes");
             return false;
         }
         if (!extractURLParts(url, _pathParam, _baseDomain)) {
@@ -377,7 +377,7 @@ public:
     int https_post(const char *payload, size_t size, uint32_t inputTimeout = 10000)
     {
         if (size > TINYGSM_SIM7XXX_HTTP_BODY_MAX_LEN) {
-            log_e("SIM7XXX max body length is 1024 bytes");
+            // log_e("SIM7XXX max body length is 1024 bytes");
             return -1;
         }
         if (payload == NULL || size == 0) {
@@ -551,8 +551,8 @@ private:
     bool extractURLParts(String url, String &pathParam, String &baseDomain)
     {
         if (url.indexOf("://") == -1) {
-            log_e(
-                "Error: The input string is not a valid URL (missing the protocol header ://)");
+            //log_e(
+            //    "Error: The input string is not a valid URL (missing the protocol header ://)");
             return false;
         }
         int protocolEnd = url.indexOf("//") + 2;
@@ -594,7 +594,7 @@ private:
             thisModem().streamSkipUntil(',');
             int    status = thisModem().streamGetIntBefore(',');
             _bodyLength = thisModem().streamGetLongLongBefore('\r');
-            log_d("Method:%d http code:%d length:%u", method, status, _bodyLength);
+            // log_d("Method:%d http code:%d length:%u", method, status, _bodyLength);
             return status;
         }
         return -1;

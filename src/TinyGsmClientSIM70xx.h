@@ -723,7 +723,7 @@ public:
     // <GNSS run status>
     bool running = thisModem().streamGetIntBefore(',');
     if (!running) {
-      log_e("GPS NOT START");
+      // log_e("GPS NOT START");
       return false;
     }
     // <Fix status>
