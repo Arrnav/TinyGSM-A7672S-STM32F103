@@ -126,7 +126,7 @@ public:
     // Select attachment
     bool email_set_attachment(const char *filename, const uint8_t *data, size_t size)
     {
-        _attachment_filename.clear();
+        _attachment_filename = "";
         _attachment_filename.concat(PATH);
         _attachment_filename.concat(":/");
         // Check file exists or not
@@ -153,7 +153,7 @@ public:
         if (_attachment_filename.length()) {
             thisModem().sendAT("+FSDEL=", _attachment_filename);
             thisModem().waitResponse();
-            _attachment_filename.clear();
+            _attachment_filename = "";
         }
         return res;
     }

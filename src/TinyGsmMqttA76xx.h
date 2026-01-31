@@ -122,7 +122,7 @@ public:
                     thisModem().stream.write(this->cert_pem);
                 }
                 if (thisModem().waitResponse() != 1) {
-                    ESP_LOGE("A76XX", "Write ca_cert pem failed!");
+                    DBG("Write ca_cert pem failed!");
                     return false;
                 }
                 thisModem().sendAT("+CSSLCFG=\"cacert\",0,\"ca_cert.pem\"");
@@ -135,7 +135,7 @@ public:
                     thisModem().stream.write(this->client_cert_pem);
                 }
                 if (thisModem().waitResponse() != 1) {
-                    ESP_LOGE("A76XX", "Write cert pem failed!");
+                    DBG("Write cert pem failed!");
                     return false;
                 }
                 thisModem().sendAT("+CSSLCFG=\"clientcert\",0,\"cert.pem\"");
@@ -148,7 +148,7 @@ public:
                     thisModem().stream.write(this->client_key_pem);
                 }
                 if (thisModem().waitResponse() != 1) {
-                    ESP_LOGE("A76XX", "Write key_cert failed!");
+                    DBG("Write key_cert failed!");
                     return false;
                 }
                 thisModem().sendAT("+CSSLCFG=\"clientkey\",0,\"key_cert.pem\"");

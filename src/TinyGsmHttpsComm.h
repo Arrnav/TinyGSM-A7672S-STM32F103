@@ -239,7 +239,7 @@ class TinyGsmHttpsComm {
       int    action = thisModem().streamGetIntBefore(',');
       int    status = thisModem().streamGetIntBefore(',');
       size_t length = thisModem().streamGetLongLongBefore('\r');
-      log_d("Method:%d http code:%d length:%u", action, status, length);
+      // log_d("Method:%d http code:%d length:%u", action, status, length);
       if (bodyLength) { *bodyLength = length; }
       return status;
     }
@@ -258,18 +258,18 @@ class TinyGsmHttpsComm {
     if (!https_wait_header_respond()) { return ""; }
     int length = thisModem().streamGetIntBefore('\n');
     if (length == -9999 || length == 0) {
-      log_e("header is invalid");
+      // log_e("header is invalid");
       return "";
     }
     uint8_t* buffer = NULL;
     buffer          = (uint8_t*)TINY_GSM_MALLOC(length + 1);
     if (!buffer) {
-      log_e("malloc is failed");
+      // log_e("malloc is failed");
       return "";
     }
     if (thisModem().stream.readBytes(buffer, length) != length) {
       free(buffer);
-      log_e("readbytes is failed");
+      // log_e("readbytes is failed");
       return "";
     }
     buffer[length] = '\0';
@@ -323,7 +323,7 @@ class TinyGsmHttpsComm {
       thisModem().stream.flush();
       return "";
     }
-    log_v("malloc memory %u bytes", total + 1);
+    // log_v("malloc memory %u bytes", total + 1);
     thisModem().sendAT("+HTTPREAD=0,", total);
     if (thisModem().waitResponse(3000) != 1) {
       free(buffer);
@@ -335,7 +335,7 @@ class TinyGsmHttpsComm {
         return "";
       }
       int length = thisModem().streamGetIntBefore('\n');
-      log_v("length = %d total:%d offset:%d", length, total, offset);
+      // log_v("length = %d total:%d offset:%d", length, total, offset);
       if (length == -9999) { break; }
       if (thisModem().stream.readBytes(buffer + offset, length) != length) {
         free(buffer);
@@ -423,7 +423,7 @@ class TinyGsmHttpsComm {
    */
   int https_put(const char* payload, size_t size) {
     if (platform == QUALCOMM_SIM7600G) {
-      log_e("SIM7600 NOT SUPPORT HTTP PUT METHOD");
+      // log_e("SIM7600 NOT SUPPORT HTTP PUT METHOD");
       return -1;
     }
     return https_method(TINYGSM_HTTP_PUT, payload, size);
@@ -444,7 +444,7 @@ class TinyGsmHttpsComm {
    */
   int https_put(const String& payload) {
     if (platform == QUALCOMM_SIM7600G) {
-      log_e("SIM7600 NOT SUPPORT HTTP PUT METHOD");
+      // log_e("SIM7600 NOT SUPPORT HTTP PUT METHOD");
       return -1;
     }
     return https_method(TINYGSM_HTTP_PUT, payload.c_str(), payload.length());
@@ -504,7 +504,7 @@ class TinyGsmHttpsComm {
       int action = thisModem().streamGetIntBefore(',');
       int status = thisModem().streamGetIntBefore(',');
       int length = thisModem().streamGetIntBefore('\r');
-      log_d("Method:%d http code:%d length:%u", action, status, length);
+      // log_d("Method:%d http code:%d length:%u", action, status, length);
       return status;
     }
     return -1;
@@ -543,7 +543,7 @@ class TinyGsmHttpsComm {
       int    action = thisModem().streamGetIntBefore(',');
       int    status = thisModem().streamGetIntBefore(',');
       size_t length = thisModem().streamGetLongLongBefore('\r');
-      log_d("Method:%d http code:%d length:%u", action, status, length);
+      // log_d("Method:%d http code:%d length:%u", action, status, length);
       return status;
     }
     return -1;
